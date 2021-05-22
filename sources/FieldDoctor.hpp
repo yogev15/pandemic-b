@@ -8,7 +8,7 @@ namespace pandemic{
         FieldDoctor(Board& board , City city):Player(board ,city){
             this->role_ = "FieldDoctor";
         }
-        ~FieldDoctor(){}
+       
         Player& treat(City city)override;
     };
     

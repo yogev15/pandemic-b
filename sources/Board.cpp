@@ -1,5 +1,10 @@
 #include "Board.hpp"
+#include "Player.hpp"
+#include "Medic.hpp"
+#include "City.hpp"
+
 using namespace std;
+
 namespace pandemic{
 
   /* constractor */
@@ -88,8 +93,27 @@ namespace pandemic{
     return this->deases_level.at(city);
   }
 
-  std::ostream& operator<<(std::ostream& os ,const Board& board){    
-    return (os << " stam" << std::endl);
+  ostream& operator<<(ostream& os ,const Board& board){    
+    os << "______________________________Board______________________________" << endl << endl;
+    os << "               cities and deases level               " << endl << endl;
+
+    for(const auto &level: board.deases_level){
+      os << city_by_string(level.first) << ": " << level.second << endl;
+    }
+   
+    os << endl;
+    os << "               discovered cures               " << endl << endl;
+    for(const auto &cure: board.discovered_cures){
+      os << colors_by_string(cure) << endl;
+    }
+
+    os << endl;
+    os << "               research stations               " << endl << endl; 
+    for(const auto &station: board.cities_stations){
+      os << city_by_string(station) << endl;
+    }
+
+    return os;
   }
  
   bool Board::is_clean(){
@@ -111,9 +135,9 @@ namespace pandemic{
     this->cities_stations.clear();
   }
 
-  Color Board::which_color(City city){
-         return this->cities_color.at(city);
-    }
+  // Color Board::which_color(City city){
+  //        return this->cities_color.at(city);
+  // }
 
   bool Board::exists_cure(Color color){
     bool ans = false;
@@ -127,15 +151,13 @@ namespace pandemic{
   }
 
   bool Board::exists_station(City city){
-    bool ans = false;
     for(const City c:this->cities_stations){
       if(city == c){
-        ans = true;
-        break;
+        return true;
       }
     }
-    return ans;
-    }
+    return false;
+  }
 
   void Board::build_station(City city){
     this->cities_stations.insert(city);
@@ -149,13 +171,32 @@ namespace pandemic{
     this->discovered_cures.insert(color);
   }
 
-   bool Board::is_neighbors(City city1 , City city2){
-      for(const City c: this->neighbors.at(city1)){
-        if(c == city2){
-         return true;
-        }
+  bool Board::is_neighbors(City city1 , City city2){
+    for(const City c: this->neighbors.at(city1)){
+      if(c == city2){
+        return true;
       }
-      return false;
-   }
+    }
+    return false;
+  }
 
+}
+
+using namespace pandemic;
+
+int main(){
+  Board board;
+
+  //EMPTY BOARD
+
+  board[City::Washington] = 2;
+
+  Medic player{board, City::Lima};
+  
+
+  cout << board << endl;
+
+
+
+  return 0;
 }

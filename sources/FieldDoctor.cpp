@@ -1,13 +1,14 @@
 #include "FieldDoctor.hpp"
+using namespace std;
 
-namespace pandemic{
+using namespace pandemic;
     
     Player& FieldDoctor::treat(City city){
         if(this->board[city] == 0){
-            throw std::invalid_argument("A city free of disease!");
+            throw invalid_argument("A city free of disease!");
         }
         if(!this->board.is_neighbors(this->current_city , city) && this->current_city != city){
-             throw std::invalid_argument("cities not neighbors!");
+             throw invalid_argument("cities not neighbors!");
         }
         
             //if cure already exists
@@ -19,4 +20,3 @@ namespace pandemic{
         }
         return *this;
     }
-}

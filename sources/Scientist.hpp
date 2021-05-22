@@ -11,7 +11,6 @@ namespace pandemic{
             this->discover_ability = n;
         }
 
-        ~Scientist(){}
         Player& discover_cure(Color color) override;
     };
     

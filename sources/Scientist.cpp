@@ -1,10 +1,8 @@
 #include "Scientist.hpp"
 using namespace std;
-namespace pandemic{
+using namespace pandemic;
 
     Player& Scientist::discover_cure(Color color){
-        bool ans_cures = this->board.exists_cure(color);
-        bool ans_station = this->board.exists_station(this->current_city);
         
         int  count = 0;
         for(City c : this->cards){
@@ -12,7 +10,7 @@ namespace pandemic{
                 count++;
             }
         }
-        if(!ans_station){
+        if(!this->board.exists_station(this->current_city)){
             throw invalid_argument{" Scientist - no reaserch station"};
         }
 
@@ -20,7 +18,7 @@ namespace pandemic{
             throw invalid_argument("The Player doesn't have enough cards!");
         }
         
-        if(!ans_cures){
+        if(!this->board.exists_cure(color)){
            std::unordered_set<City> temp_cards;
             
             //copy the cards
@@ -51,4 +49,3 @@ namespace pandemic{
         }
         return *this;
     }
-}

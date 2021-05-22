@@ -15,7 +15,11 @@ SOURCES=$(wildcard $(SOURCE_PATH)/*.cpp)
 HEADERS=$(wildcard $(SOURCE_PATH)/*.hpp)
 OBJECTS=$(subst sources/,objects/,$(subst .cpp,.o,$(SOURCES)))
 
-run: test1 test2 test3
+
+run: test1 test2 test3 
+
+main: main.o
+	$(CXX) main.o main
 
 test1: TestRunner.o StudentTest1.o  $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
@@ -29,13 +33,14 @@ test3: TestRunner.o StudentTest3.o  $(OBJECTS)
 demo: Demo.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-
 %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 $(OBJECT_PATH)/%.o: $(SOURCE_PATH)/%.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
+main.o: main.cpp
+	$(CXX) -c main.cpp
 
 StudentTest1.cpp:  # Alomg Jakov Maatuf
 	curl https://raw.githubusercontent.com/AlmogJakov/Pandemic/main/Test.cpp > $@
@@ -55,3 +60,4 @@ valgrind: test1
 clean:
 	rm -f $(OBJECTS) *.o test* demo*
 	rm -f StudentTest*.cpp
+

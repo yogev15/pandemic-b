@@ -20,8 +20,10 @@ namespace pandemic{
         public:
       
           Player(Board& b, City city):board(b), current_city(city){
-            this->cards = {};
+            cards = {};
           }
+
+          ~Player(){ delete &cards; }
 
           virtual Player& drive(City city); 
           virtual Player& fly_direct(City city);

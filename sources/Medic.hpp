@@ -9,8 +9,6 @@ namespace pandemic{
         Medic(Board& board , City city):Player(board,city){
             this->role_ = "Medic";
         }
-        ~Medic(){
-        }
 
         Player& treat(City city)override;
         Player& drive(City city)override;

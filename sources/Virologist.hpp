@@ -8,7 +8,7 @@ namespace pandemic{
         Virologist(Board& board , City city):Player(board,city){
             this->role_ = "Virologist";
         }
-        ~Virologist(){}
+        
         Player& treat(City city)override;
     };
     

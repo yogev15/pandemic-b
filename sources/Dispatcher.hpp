@@ -10,7 +10,7 @@ namespace pandemic{
         Dispatcher(Board& board , City city):Player(board,city){
             this->role_ = "Dispatcher";
         }
-        ~Dispatcher(){}
+        
         Player& fly_direct(City city)override;
     };
     

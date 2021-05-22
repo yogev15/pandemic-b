@@ -1,10 +1,11 @@
 #include "Researcher.hpp"
 using namespace std;
-namespace pandemic{
+using namespace pandemic;
+
+const int sum_of_cards = 5;
 
      Player& Researcher::discover_cure(Color color){
-      bool ans_cures = this->board.exists_cure(color);
-        
+     
         int  count = 0;
         for(City c : this->cards){
             if(this->board.get_color(c) == color){
@@ -12,11 +13,11 @@ namespace pandemic{
             }
         }
 
-        if(count < 5){
+        if(count < sum_of_cards){
            throw invalid_argument{"The Researcher doesn't have enough cards!"};
         }
         
-        if(!ans_cures){
+        if(!this->board.exists_cure(color)){
            std::unordered_set<City> temp_cards;
             
             //copy the cards
@@ -46,4 +47,3 @@ namespace pandemic{
         }
         return *this;
      }
-}

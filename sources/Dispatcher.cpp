@@ -1,10 +1,11 @@
 #include "Dispatcher.hpp"
+using namespace std;
 
-namespace pandemic{
+using namespace pandemic;
 
     Player& Dispatcher::fly_direct(City city){
         if(city == this->current_city){
-            throw std::invalid_argument{"can't fly from city to itself!"};
+            throw invalid_argument{"can't fly from city to itself!"};
         }
         
         if(this->board.exists_station(this->current_city)){
@@ -12,10 +13,9 @@ namespace pandemic{
         }
         else{
             if(!holds_card(city)){
-                throw std::invalid_argument("no card");
+                throw invalid_argument("no card");
             }
             this->current_city = city;
         }
         return *this;
     }
-}

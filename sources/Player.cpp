@@ -1,6 +1,8 @@
 #include "Player.hpp"
 using namespace std;
-namespace pandemic{
+using namespace pandemic;
+
+const int sum_of_cards = 5;
 
     bool Player::holds_card(City city){
         bool ans = false;
@@ -51,12 +53,14 @@ namespace pandemic{
     }
 
     Player& Player::fly_shuttle(City city){
-        if(!this->board.exists_station(this->current_city) || !this->board.exists_station(city))
+        if(!this->board.exists_station(this->current_city) || !this->board.exists_station(city)){
             throw invalid_argument("no stations in src/dst city");
+        }
         
 
-        if(city == this->current_city)
+        if(city == this->current_city){
             throw invalid_argument("can't fly from city to itself");
+        }
         
 
         this->current_city = city; 
@@ -64,8 +68,9 @@ namespace pandemic{
     }
     
     void Player::build(){
-        if(!holds_card(this->current_city))
+        if(!holds_card(this->current_city)){
             throw invalid_argument("don't have the currect card");
+        }
         
         bool ans = this->board.exists_station(this->current_city);
         if(!ans){ //if the player had the currect card and there is no reaserch station
@@ -76,14 +81,14 @@ namespace pandemic{
 
     Player& Player::discover_cure(Color color){
         int  count = 0;
-        //counting how many cards the player had
+        //counting how many cards the player have
         for(City c : this->cards){
             if(this->board.get_color(c) == color){
                 count++;
             }
         }
         
-        if(count < 5){
+        if(count < sum_of_cards){
             throw invalid_argument{"Player don't have enough cards!"};
         }
         
@@ -142,7 +147,7 @@ namespace pandemic{
         return *this;
     }
 
-    std::string Player::role(){
+    string Player::role(){
        return role_;
     }
 
@@ -155,10 +160,3 @@ namespace pandemic{
         this->cards.clear();
     }
 
-    Color Player::random_color(){
-        const int array_size = 4;
-        Color list_color[array_size]= {Color::Black, Color::Yellow,Color::Blue,Color::Red};
-        Color ran = list_color[rand() % array_size];
-        return ran;
-    }
-}
